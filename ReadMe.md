@@ -47,10 +47,9 @@ Creating the stereo camera in blender, and rendering a trajectory
     
     For example, to run the example trajectory and save the images run the following, where PATH is the path to the FlyView directory:
     <blockquote>
-        <p>filename = "PATH/examples/example_trajectory.csv"
-        destination = "PATH/examples/rectilinear"
-        stereocamera.render_trajectory(filename, destination)
-        </p>
+        <p>filename = "PATH/examples/example_trajectory.csv"</p>
+        <p>destination = "PATH/examples/rectilinear"</p>
+        <p>stereocamera.render_trajectory(filename, destination)</p>
     </blockquote>
     
     
