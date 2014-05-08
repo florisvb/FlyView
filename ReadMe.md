@@ -13,9 +13,9 @@ Download and setup blender
 Creating the scene in blender
 --------------
 1. Enter the following at the python command prompt, which assigns the correct file to the variable filename:
-    <blockquote>
-        <p>filename = "~/PathToGeneratorScript.py"</p>
-    </blockquote>
+    ```python
+    filename = "~/PathToGeneratorScript.py"
+    ```
     
     For example, where PATH is the path to the FlyView directory:
     
