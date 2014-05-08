@@ -19,38 +19,38 @@ Creating the scene in blender
     
     For example, where PATH is the path to the FlyView directory:
     
-    <blockquote>
-        <p>filename = "PATH/examples/create_arena_in_blender.py"</p>
-    </blockquote>
+    ```python
+    filename = "PATH/examples/create_arena_in_blender.py"
+    ```
 
 2. Execute the filename:
-    <blockquote>
-        <p>exec(compile(open(filename).read(), filename, 'exec'))</p>
-    </blockquote>
+    ```python
+    exec(compile(open(filename).read(), filename, 'exec'))
+    ```
 
 3. Explore the scene in the left window
 
 Creating the stereo camera in blender, and rendering a trajectory
 --------------
 1. Enter the following at the python command prompt, where PATH is the path to the FlyView directory
-    <blockquote>
-        <p>filename = "PATH/blender/create_wideangle_camera_stereo.py"</p>
-    </blockquote>
+    ```python
+    filename = "PATH/blender/create_wideangle_camera_stereo.py"
+    ```
 2. Execute the file, this creates the object "stereocamera," which is associated with two 180 degree cameras: 
-    <blockquote>
-        <p>exec(compile(open(filename).read(), filename, 'exec'))</p>
-    </blockquote>
+    ```python
+    exec(compile(open(filename).read(), filename, 'exec'))
+    ```
 3. Run the following code in the command prompt, where "filename" is the filename of your desired trajectory (see below), and "destination" is the path to a (empty) directory where you wish to have the images saved
-    <blockquote>
-        <p>stereocamera.render_trajectory(filename, destination)</p>
-    </blockquote>
+    ```python
+    stereocamera.render_trajectory(filename, destination)
+    ```
     
     For example, to run the example trajectory and save the images run the following, where PATH is the path to the FlyView directory:
-    <blockquote>
-        <p>filename = "PATH/examples/example_trajectory.csv"</p>
-        <p>destination = "PATH/examples/rectilinear"</p>
-        <p>stereocamera.render_trajectory(filename, destination)</p>
-    </blockquote>
+    ```python
+    filename = "PATH/examples/example_trajectory.csv"
+    destination = "PATH/examples/rectilinear"
+    stereocamera.render_trajectory(filename, destination)
+    ```
     
     
     
