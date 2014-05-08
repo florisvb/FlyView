@@ -36,10 +36,12 @@ Creating the stereo camera in blender, and rendering a trajectory
     ```python
     filename = "PATH/blender/create_wideangle_camera_stereo.py"
     ```
+    
 2. Execute the file, this creates the object "stereocamera," which is associated with two 180 degree cameras: 
     ```python
     exec(compile(open(filename).read(), filename, 'exec'))
     ```
+    
 3. Run the following code in the command prompt, where "filename" is the filename of your desired trajectory (see below), and "destination" is the path to a (empty) directory where you wish to have the images saved
     ```python
     stereocamera.render_trajectory(filename, destination)
