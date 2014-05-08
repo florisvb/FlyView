@@ -25,10 +25,10 @@ Creating the scene in blender
 
 2. Execute the filename:
     <blockquote>
-        <p>filename = exec(compile(open(filename).read(), filename, 'exec'))</p>
+        <p>exec(compile(open(filename).read(), filename, 'exec'))</p>
     </blockquote>
 
-3. Explore the scene scene in the left window
+3. Explore the scene in the left window
 
 Creating the stereo camera in blender, and rendering a trajectory
 --------------
@@ -38,10 +38,25 @@ Creating the stereo camera in blender, and rendering a trajectory
     </blockquote>
 2. Execute the file, this creates the object "stereocamera," which is associated with two 180 degree cameras: 
     <blockquote>
-        <p>filename = exec(compile(open(filename).read(), filename, 'exec'))</p>
+        <p>exec(compile(open(filename).read(), filename, 'exec'))</p>
     </blockquote>
 3. Run the following code in the command prompt, where "filename" is the filename of your desired trajectory (see below), and "destination" is the path to a (empty) directory where you wish to have the images saved
     <blockquote>
         <p>stereocamera.render_trajectory(filename, destination)</p>
     </blockquote>
+    
+    For example, to run the example trajectory and save the images run the following, where PATH is the path to the FlyView directory:
+    <blockquote>
+        <p>filename = "PATH/examples/example_trajectory.csv"
+        destination = "PATH/examples/rectilinear"
+        stereocamera.render_trajectory(filename, destination)
+        </p>
+    </blockquote>
+    
+    
+    
+    
+    
+    
+    
 
