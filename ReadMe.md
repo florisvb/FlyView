@@ -2,6 +2,8 @@ Instructions
 ==============
 
 The scripts in this package use blender, a free open source 3D modelling program, to render fly-view stills and movies. It is a bit roundabout and inelegant, but it works. The code uses blender to render the scene from two cameras for every desired point along a trajectory. These images are then converted to fly-view images. The entire process does take quite some time. 
+
+Much of the code is thanks to Dr. Andrew Straw, and based on the measurements made by Buchner (1971).
  
 Download and setup blender
 --------------
