@@ -407,7 +407,8 @@ class EquiRectangularFlyView:
                         ommap_left=None,
                         ommap_right=None, 
                         save_ommap='',
-                        zombiemode=False):
+                        zombiemode=False,
+                        SHOW_OMMATIDIA_NUMBERS=False):
         '''
         image_size - [source image width, source image height] 
                      equivalent to [source image columns, source image rows]
@@ -445,7 +446,8 @@ class EquiRectangularFlyView:
         
         
         '''
-    
+        self.SHOW_OMMATIDIA_NUMBERS = SHOW_OMMATIDIA_NUMBERS
+        
         self.fig = plt.figure(figsize=(2,1))
         self.ax = self.fig.add_axes([0,0,1,1])
         self.fig.set_frameon(False)
@@ -489,7 +491,8 @@ class EquiRectangularFlyView:
             
             center = np.mean(new_face, axis=0)
             self.centers.append(center)
-            self.ax.text(center[0], center[1], str(n), horizontalalignment='center', verticalalignment='center', fontsize=1, color='red', zorder=1000)
+            if self.SHOW_OMMATIDIA_NUMBERS:
+                self.ax.text(center[0], center[1], str(n), horizontalalignment='center', verticalalignment='center', fontsize=1, color='red', zorder=1000)
             
     def calc_fly_view_for_image(self, img_left, img_right, filename, output_height=720):
         for n in range(len(self.ommap_left.keys())):
@@ -616,6 +619,8 @@ if __name__ == '__main__':
                         help="directory where files ommap_left.pickle and ommap_right.pickle can be found")
     parser.add_option("--save-data", type="int", dest="save_data", default=0,
                         help="save ommatidia maps, but not images")
+    parser.add_option("--show-ommatidia-numbers", type="int", dest="show_ommatidia_numbers", default=0,
+                        help="write ommatidia numbers inside each hexagon, default is 0 aka False")
     (options, args) = parser.parse_args()
     
     def get_ommap(ommap, side):
@@ -644,13 +649,13 @@ if __name__ == '__main__':
     
     if len(options.image) > 0:
         img = plt.imread(options.image)
-        flyview = EquiRectangularFlyView([img.shape[1], img.shape[0]], intrinsic_camera_matrix, save_ommap=options.save_ommap, ommap_left=ommap_left, ommap_right=ommap_right)
+        flyview = EquiRectangularFlyView([img.shape[1], img.shape[0]], intrinsic_camera_matrix, save_ommap=options.save_ommap, ommap_left=ommap_left, ommap_right=ommap_right, SHOW_OMMATIDIA_NUMBERS=options.show_ommatidia_numbers)
         flyview.calc_fly_view_for_image(img, options.output, options.output_height)
     
     elif len(options.directory) > 0 and len(options.destination) > 0:
         imgfiles = get_filenames_from_directory(options.directory, match=options.input_type)
         img = plt.imread(imgfiles[0])
-        flyview = EquiRectangularFlyView([img.shape[1], img.shape[0]], intrinsic_camera_matrix, save_ommap=options.save_ommap, ommap_left=ommap_left, ommap_right=ommap_right)
+        flyview = EquiRectangularFlyView([img.shape[1], img.shape[0]], intrinsic_camera_matrix, save_ommap=options.save_ommap, ommap_left=ommap_left, ommap_right=ommap_right, SHOW_OMMATIDIA_NUMBERS=options.show_ommatidia_numbers)
         
         if options.save_data:
             flyview.save_fly_view_for_images(options.directory, options.destination)
