@@ -1,6 +1,22 @@
 Instructions
 ==============
 
+For a simple static rendering of a 2D scene with a single image
+-------------
+
+Ignore the blender stuff. From the fly_view directory, simple run the script as:
+
+python ./fly_view_stereo.py --image=IMAGE_FILENAME --output=OUTPUT_FILENAME(must be .png)
+
+if you intend to render more than a single image, save the ommap's with command:
+ --save-ommap=DIRECTORY_WHERE_TO_SAVE
+ 
+then, next time, add the command:
+ --ommap=DIRECTORY_WHERE_OMMAPS_SAVED
+ 
+Introduction
+-------------
+
 The scripts in this package use blender, a free open source 3D modelling program, to render fly-view stills and movies. It is a bit roundabout and inelegant, but it works. The code uses blender to render the scene from two cameras for every desired point along a trajectory. These images are then converted to fly-view images. The entire process does take quite some time. 
 
 Much of the code is thanks to Dr. Andrew Straw, and based on the measurements made by Buchner (1971).
