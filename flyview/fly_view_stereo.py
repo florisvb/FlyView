@@ -408,7 +408,8 @@ class EquiRectangularFlyView:
                         ommap_right=None, 
                         save_ommap='',
                         zombiemode=False,
-                        SHOW_OMMATIDIA_NUMBERS=False):
+                        SHOW_OMMATIDIA_NUMBERS=False,
+                        SHOW_OMMATIDIA_EDGES=False):
         '''
         image_size - [source image width, source image height] 
                      equivalent to [source image columns, source image rows]
@@ -447,6 +448,7 @@ class EquiRectangularFlyView:
         
         '''
         self.SHOW_OMMATIDIA_NUMBERS = SHOW_OMMATIDIA_NUMBERS
+        self.SHOW_OMMATIDIA_EDGES = SHOW_OMMATIDIA_EDGES
         
         self.fig = plt.figure(figsize=(2,1))
         self.ax = self.fig.add_axes([0,0,1,1])
@@ -483,9 +485,15 @@ class EquiRectangularFlyView:
     def calc_polygons(self):                
         self.polygons = []
         self.centers = []
+        if self.SHOW_OMMATIDIA_EDGES:
+            edgecolor = 'black'
+            linewidth = 0.1
+        else:
+            edgecolor = 'none'
+            linewidth = 1
         for n, face in enumerate(hex_faces):
             new_face = get_equirectangular_hexagon(n, face)
-            polygon = patches.Polygon(new_face, facecolor='black', edgecolor='black', linewidth=0.1)
+            polygon = patches.Polygon(new_face, facecolor='black', edgecolor=edgecolor, linewidth=linewidth)
             self.polygons.append(polygon)
             self.ax.add_artist(polygon)
             
@@ -510,7 +518,8 @@ class EquiRectangularFlyView:
                 color = (0,0,0,1)
             else:
                 color = np.mean([color_right, color_left], axis=0)
-                
+            
+            color = [c/255. for c in color]
             self.polygons[n].set_facecolor(color)
         self.fig.savefig(filename, format='png', dpi=int(output_height))
     
@@ -621,6 +630,8 @@ if __name__ == '__main__':
                         help="save ommatidia maps, but not images")
     parser.add_option("--show-ommatidia-numbers", type="int", dest="show_ommatidia_numbers", default=0,
                         help="write ommatidia numbers inside each hexagon, default is 0 aka False")
+    parser.add_option("--show-ommatidia-edges", type="int", dest="show_ommatidia_edges", default=0,
+                        help="draw edges of each hexagon in black, default is 0 aka False")
     (options, args) = parser.parse_args()
     
     def get_ommap(ommap, side):
@@ -649,13 +660,13 @@ if __name__ == '__main__':
     
     if len(options.image) > 0:
         img = plt.imread(options.image)
-        flyview = EquiRectangularFlyView([img.shape[1], img.shape[0]], intrinsic_camera_matrix, save_ommap=options.save_ommap, ommap_left=ommap_left, ommap_right=ommap_right, SHOW_OMMATIDIA_NUMBERS=options.show_ommatidia_numbers)
-        flyview.calc_fly_view_for_image(img, options.output, options.output_height)
+        flyview = EquiRectangularFlyView([img.shape[1], img.shape[0]], intrinsic_camera_matrix, save_ommap=options.save_ommap, ommap_left=ommap_left, ommap_right=ommap_right, SHOW_OMMATIDIA_NUMBERS=options.show_ommatidia_numbers, SHOW_OMMATIDIA_EDGES=options.show_ommatidia_edges)
+        flyview.calc_fly_view_for_image(img, img, options.output, options.output_height)
     
     elif len(options.directory) > 0 and len(options.destination) > 0:
         imgfiles = get_filenames_from_directory(options.directory, match=options.input_type)
         img = plt.imread(imgfiles[0])
-        flyview = EquiRectangularFlyView([img.shape[1], img.shape[0]], intrinsic_camera_matrix, save_ommap=options.save_ommap, ommap_left=ommap_left, ommap_right=ommap_right, SHOW_OMMATIDIA_NUMBERS=options.show_ommatidia_numbers)
+        flyview = EquiRectangularFlyView([img.shape[1], img.shape[0]], intrinsic_camera_matrix, save_ommap=options.save_ommap, ommap_left=ommap_left, ommap_right=ommap_right, SHOW_OMMATIDIA_NUMBERS=options.show_ommatidia_numbers, SHOW_OMMATIDIA_EDGES=options.show_ommatidia_edges)
         
         if options.save_data:
             flyview.save_fly_view_for_images(options.directory, options.destination)
