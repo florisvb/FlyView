@@ -510,16 +510,19 @@ class EquiRectangularFlyView:
             color_left = get_ommatidia_value_from_rectilinear_image(img_left, left_pixels)
             color_right = get_ommatidia_value_from_rectilinear_image(img_right, right_pixels)
             
+            print 'colors: ', color_left, color_right
             if np.sum(np.isnan(color_left)) > 0 and np.sum(np.isnan(color_right)) == 0:
                 color = color_right
             elif np.sum(np.isnan(color_right)) > 0 and np.sum(np.isnan(color_left)) == 0:
                 color = color_left
-            elif np.sum(np.isnan(color_right)) > 0:
+            elif np.sum(np.isnan(color_right)) > 0 and np.sum(np.isnan(color_left)) > 0:
                 color = (0,0,0,1)
             else:
                 color = np.mean([color_right, color_left], axis=0)
+            print color
             
-            color = [c/255. for c in color]
+            if np.max(color) > 1:
+                color = [c/255. for c in color]
             self.polygons[n].set_facecolor(color)
         self.fig.savefig(filename, format='png', dpi=int(output_height))
     
